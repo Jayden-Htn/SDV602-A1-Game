@@ -1,8 +1,8 @@
-from enum import Enum
 """_summary_
 
 Take string containing a proposed command produce a list of tokens
 """
+
 _vocab_tokens = set(['north', 'south', 'east', 'west', 'monster', 'fight', 'pick', 'up',
                     'open', 'close', 'run', 'duck', 'hide', 'go', 'swing', 'number', 'operator', 'name'])
 _operators = set(['+', '-', 'x', '/', '(', ')'])

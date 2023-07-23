@@ -1,11 +1,11 @@
 """ 
-A comment describing the game module
+The main module of the game.  This module will be responsible for the game loop and the game window.
 """
+
 import PySimpleGUI as sg
-import time
 import cmd_parser.token as token
 
-# Brief comment about how the following lines work
+# initialise game states
 game_state = 'Forest'
 game_places = {'Forest': {'Story': 'You are in the forest.\nTo the north is a cave.\nTo the south is a castle',
                           'North': 'Cave', 'South': 'Castle', 'Image': 'forest.png'},
@@ -69,14 +69,10 @@ def make_a_window():
 
 
 if __name__ == "__main__":
-    # testing for now
-    # print(show_current_place())
-    # current_story = game_play('North')
-    # print(show_current_place())
-
     # A persisent window - stays until "Exit" is pressed
     window = make_a_window()
 
+    # Main game loop
     while True:
         event, values = window.read()
         print(event)
@@ -89,7 +85,6 @@ if __name__ == "__main__":
 
             window['-IMG-'].update(r'images/'+game_places[game_state]
                                    ['Image'], size=(100, 100))
-
             pass
         elif event == 'Exit' or event is None or event == sg.WIN_CLOSED:
             break
