@@ -3,11 +3,11 @@ The main module of the game.  This module will be responsible for the game loop 
 """
 
 import PySimpleGUI as sg
-import cmd_parser.token as token
+import command_parser.token as token
 
 # initialise game states
-game_state = 'Forest'
-game_places = {'Forest': {'Story': 'You are in the forest.\nTo the north is a cave.\nTo the south is a castle',
+current_location = 'Forest'
+game_locations = {'Forest': {'Story': 'You are in the forest.\nTo the north is a cave.\nTo the south is a castle',
                           'North': 'Cave', 'South': 'Castle', 'Image': 'forest.png'},
                'Cave': {'Story': 'You are at the cave.\nTo the south is forest.',
                         'North': '', 'South': 'Forest', 'Image': 'forest_circle.png'},
@@ -17,14 +17,14 @@ game_places = {'Forest': {'Story': 'You are in the forest.\nTo the north is a ca
 
 
 def show_current_place():
-    """Gets the story at the game_state place
+    """Gets the story at the current_location place
 
     Returns:
         string: the story at the current place
     """
-    global game_state
+    global current_location
 
-    return game_places[game_state]['Story']
+    return game_locations[current_location]['Story']
 
 
 def game_play(direction):
@@ -37,16 +37,16 @@ def game_play(direction):
     Returns:
         string: the story at the current place
     """
-    global game_state
+    global current_location
 
     if direction.lower() in 'northsouth':  # is this a nasty check?
-        game_place = game_places[game_state]
-        proposed_state = game_place[direction.capitalize()]
-        if proposed_state == '':
-            return 'You can not go that way.\n'+game_places[game_state]['Story']
+        game_location = game_locations[current_location]
+        proposed_location = game_location[direction.capitalize()]
+        if proposed_location == '':
+            return 'You can not go that way.\n'+game_locations[current_location]['Story']
         else:
-            game_state = proposed_state
-            return game_places[game_state]['Story']
+            current_location = proposed_location
+            return game_locations[current_location]['Story']
 
 
 def make_a_window():
@@ -69,7 +69,7 @@ def make_a_window():
 
 
 if __name__ == "__main__":
-    # A persisent window - stays until "Exit" is pressed
+    # Start window
     window = make_a_window()
 
     # Main game loop
@@ -79,11 +79,11 @@ if __name__ == "__main__":
         if event == 'Enter':
             list_of_tokens = token.valid_list(values['-IN-'].lower())
 
-            for atoken in list_of_tokens:
-                current_story = game_play(atoken)
+            for token in list_of_tokens:
+                current_story = game_play(token)
                 window['-OUTPUT-'].update(current_story)
 
-            window['-IMG-'].update(r'images/'+game_places[game_state]
+            window['-IMG-'].update(r'images/'+game_locations[current_location]
                                    ['Image'], size=(100, 100))
             pass
         elif event == 'Exit' or event is None or event == sg.WIN_CLOSED:

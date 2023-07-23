@@ -7,8 +7,6 @@ _vocab_tokens = set(['north', 'south', 'east', 'west', 'monster', 'fight', 'pick
                     'open', 'close', 'run', 'duck', 'hide', 'go', 'swing', 'number', 'operator', 'name'])
 _operators = set(['+', '-', 'x', '/', '(', ')'])
 
-# _white_space = set('\t', '\r', '\n', ' ')
-
 
 def valid_list(p_input_string):
     """
@@ -20,8 +18,7 @@ def valid_list(p_input_string):
         p_input_string (string): a string of characters 
     """
     result = []
-    for astring in p_input_string.split():
-        if astring.lower() in _vocab_tokens or astring in _operators:
-            result += [astring]
-
+    for string in p_input_string.split():
+        if string.lower() in _vocab_tokens or string in _operators:
+            result += [string]
     return result
