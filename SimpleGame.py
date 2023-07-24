@@ -13,7 +13,7 @@ game_locations = {
     'Castle': {'Story': 'You are at the castle.\n- To the south is forest.',
             'North': '','East': '', 'South': 'Forest', 'West': '', 'Image': 'castle.png'},
     'Coast': {'Story': 'You are at the coast.\n- To the west is the forest.',
-            'North': 'Cave','East': 'Cave', 'South': 'Castle', 'West': 'Cave', 'Image': 'coast.png'},
+            'North': '','East': 'Forest', 'South': '', 'West': '', 'Image': 'coast.png'},
     'Cave': {'Story': 'You are at the cave.\n- To the north is forest.',
             'North': 'Forest','East': '', 'South': '', 'West': '', 'Image': 'cave.png'},
     'Swamp': {'Story': 'You are in the swamp.\n- To the east is the forest.',
@@ -44,7 +44,7 @@ def game_play(direction):
     """
     global current_location
 
-    if direction.lower() in 'northsouth':  # is this a nasty check?
+    if direction.lower() in set(['north', 'south', 'east', 'west']):
         game_location = game_locations[current_location]
         proposed_location = game_location[direction.capitalize()]
         if proposed_location == '':
@@ -62,9 +62,9 @@ def make_a_window():
         window: the handle to the game window
     """
 
-    sg.theme('Dark Blue 3')  # please make your windows
+    sg.theme('Dark Green')  # please make your windows
     prompt_input = [sg.Text('Enter your command', font='Any 14'), sg.Input(
-        key='-IN-', size=(20, 1), font='Any 14')]
+        key='-IN-', size=(20, 1), font='Any 14', do_not_clear=False)]
     buttons = [sg.Button('Enter',  bind_return_key=True), sg.Button('Exit')]
     command_col = sg.Column([prompt_input, buttons], element_justification='r')
     layout = [[sg.Image(r'images/forest.png', size=(300, 300), key="-IMG-"), 
@@ -80,7 +80,6 @@ if __name__ == "__main__":
     # Main game loop
     while True:
         event, values = window.read()
-        print(event)
         if event == 'Enter':
             list_of_tokens = token_handler.valid_list(values['-IN-'].lower())
 
