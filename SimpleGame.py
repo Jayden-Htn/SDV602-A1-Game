@@ -7,13 +7,18 @@ import command_parser.token_handler as token_handler
 
 # initialise game states
 current_location = 'Forest'
-game_locations = {'Forest': {'Story': 'You are in the forest.\nTo the north is a cave.\nTo the south is a castle',
-                          'North': 'Cave', 'South': 'Castle', 'Image': 'forest.png'},
-               'Cave': {'Story': 'You are at the cave.\nTo the south is forest.',
-                        'North': '', 'South': 'Forest', 'Image': 'forest_circle.png'},
-               'Castle': {'Story': 'You are at the castle.\nTo the north is forest.',
-                          'North': 'Forest', 'South': '', 'Image': 'frog.png'},
-               }
+game_locations = {
+    'Forest': {'Story': 'You are in the forest.\n- To the north is a cave.\n- To the east is the coast.\n- To the south is a castle.\n- To the west is a swamp.',
+            'North': 'Castle','East': 'Coast', 'South': 'Cave', 'West': 'Swamp', 'Image': 'forest.png'},
+    'Castle': {'Story': 'You are at the castle.\n- To the south is forest.',
+            'North': '','East': '', 'South': 'Forest', 'West': '', 'Image': 'castle.png'},
+    'Coast': {'Story': 'You are at the coast.\n- To the west is the forest.',
+            'North': 'Cave','East': 'Cave', 'South': 'Castle', 'West': 'Cave', 'Image': 'coast.png'},
+    'Cave': {'Story': 'You are at the cave.\n- To the north is forest.',
+            'North': 'Forest','East': '', 'South': '', 'West': '', 'Image': 'cave.png'},
+    'Swamp': {'Story': 'You are in the swamp.\n- To the east is the forest.',
+            'North': '','East': 'Forest', 'South': '', 'West': '', 'Image': 'swamp.png'},
+    }
 
 
 def show_current_place():
