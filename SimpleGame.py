@@ -64,7 +64,7 @@ def make_a_window():
 
     sg.theme('Dark Green')  # please make your windows
     prompt_input = [sg.Text('Enter your command', font='Any 14'), sg.Input(
-        key='-IN-', size=(20, 1), font='Any 14')]
+        key='-IN-', size=(20, 1), font='Any 14', do_not_clear=False)]
     buttons = [sg.Button('Enter',  bind_return_key=True), sg.Button('Exit')]
     command_col = sg.Column([prompt_input, buttons], element_justification='r')
     layout = [[sg.Image(r'images/forest.png', size=(300, 300), key="-IMG-"), 
