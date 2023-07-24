@@ -13,7 +13,7 @@ game_locations = {
     'Castle': {'Story': 'You are at the castle.\n- To the south is forest.',
             'North': '','East': '', 'South': 'Forest', 'West': '', 'Image': 'castle.png'},
     'Coast': {'Story': 'You are at the coast.\n- To the west is the forest.',
-            'North': '','East': 'Forest', 'South': '', 'West': '', 'Image': 'coast.png'},
+            'North': '','East': '', 'South': '', 'West': 'Forest', 'Image': 'coast.png'},
     'Cave': {'Story': 'You are at the cave.\n- To the north is forest.',
             'North': 'Forest','East': '', 'South': '', 'West': '', 'Image': 'cave.png'},
     'Swamp': {'Story': 'You are in the swamp.\n- To the east is the forest.',
