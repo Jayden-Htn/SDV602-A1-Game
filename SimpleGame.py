@@ -3,7 +3,7 @@ The main module of the game.  This module will be responsible for the game loop 
 """
 
 import PySimpleGUI as sg
-import command_parser.token as token
+import command_parser.token_handler as token_handler
 
 # initialise game states
 current_location = 'Forest'
@@ -77,7 +77,7 @@ if __name__ == "__main__":
         event, values = window.read()
         print(event)
         if event == 'Enter':
-            list_of_tokens = token.valid_list(values['-IN-'].lower())
+            list_of_tokens = token_handler.valid_list(values['-IN-'].lower())
 
             for token in list_of_tokens:
                 current_story = game_play(token)
