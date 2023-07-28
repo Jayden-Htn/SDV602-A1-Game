@@ -22,3 +22,8 @@ def valid_list(p_input_string):
         if string.lower() in _vocab_tokens or string in _operators:
             result += [string]
     return result
+
+
+if __name__ == "__main__":
+    # tests
+    print(valid_list('north south'))

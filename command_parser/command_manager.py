@@ -37,3 +37,14 @@ def game_play(_direction, _game_locations, _current_location):
         else:
             new_location = proposed_location
             return [_game_locations[new_location]['Story'], new_location]
+        
+
+if __name__ == "__main__":
+    # tests
+    print(show_current_place({'Forest': {'Story': 'You are in the forest.\n- To the north is a cave.\n- To the east is the coast.\n- To the south is a castle.\n- To the west is a swamp.',
+            'North': 'Castle','East': 'Coast', 'South': 'Cave', 'West': 'Swamp', 'Image': 'forest.png'}}, 'Forest'))
+    print(game_play('north', {'Forest': {'Story': 'You are in the forest.\n- To the north is a cave.\n- To the east is the coast.\n- To the south is a castle.\n- To the west is a swamp.',
+            'North': 'Castle','East': 'Coast', 'South': 'Cave', 'West': 'Swamp', 'Image': 'forest.png'}, 
+            'Castle': {'Story': 'You are at the castle.\n- To the south is forest.',
+            'North': '','East': '', 'South': 'Forest', 'West': '', 'Image': 'castle.png'},}, 'Forest'))
+    
