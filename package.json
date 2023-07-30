@@ -1,0 +1,12 @@
+{
+  "name": "sdv602-a1-game",
+  "version": "1.0.0",
+  "description": "Python game for SDV602 assessment 1.",
+  "main": "SimpleGame.py",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
