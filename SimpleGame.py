@@ -3,24 +3,34 @@ The main module of the game.  This module will be responsible for the game loop 
 """
 
 import PySimpleGUI as psg
-import command_parser.token_handler as TKN
 import command_parser.command_manager as CMD
 import psg_reskinner as psg_rs
 
 
 # initialise game states
 current_location = 'Forest'
+game_state = 'movement' # movement, decision, fight
 game_locations = {
     'Forest': {'Story': 'You are in the forest.\n- To the north is a cave.\n- To the east is the coast.\n- To the south is a castle.\n- To the west is a swamp.',
-            'North': 'Castle','East': 'Coast', 'South': 'Cave', 'West': 'Swamp', 'Image': 'forest.png', 'Theme': 'DarkGreen'},
+            'North': 'Castle','East': 'Coast', 'South': 'Cave', 'West': 'Swamp', 
+            'BossDefeated': True,
+            'Image': 'forest.png', 'Theme': 'DarkGreen'},
     'Castle': {'Story': 'You are at the castle.\n- To the south is forest.',
-            'North': '','East': '', 'South': 'Forest', 'West': '', 'Image': 'castle.png', 'Theme': 'Reddit'},
+            'North': '','East': '', 'South': 'Forest', 'West': '', 
+            'BossDefeated': False, 'BossStory': 'Arriving at the castle, you  step foot through the grand entrance. Gazing aroung the elaborate foyer, your eyes set on the looming shape of a vampire, standing at the top of the staircase.',
+            'Image': 'castle.png', 'Theme': 'Reddit'},
     'Coast': {'Story': 'You are at the coast.\n- To the west is the forest.',
-            'North': '','East': '', 'South': '', 'West': 'Forest', 'Image': 'coast.png', 'Theme': 'LightBrown11'},
+            'North': '','East': '', 'South': '', 'West': 'Forest', 
+            'BossDefeated': False, 'BossStory': 'Hot from a long day of travel, you decide to cool down with a quick swim. You soon feel something strong wrap around you ankle.', 
+            'Image': 'coast.png', 'Theme': 'LightBrown11'},
     'Cave': {'Story': 'You are at the cave.\n- To the north is forest.',
-            'North': 'Forest','East': '', 'South': '', 'West': '', 'Image': 'cave.png', 'Theme': 'DarkBlack1'},
+            'North': 'Forest','East': '', 'South': '', 'West': '', 
+            'BossDefeated': False, 'BossStory': 'Flaming torch in hand, you work your way through the narrow cave passageway. Eventually, the walls open up into a large chamber, where a ginormous spider sits among its web.', 
+            'Image': 'cave.png', 'Theme': 'DarkBlack1'},
     'Swamp': {'Story': 'You are in the swamp.\n- To the east is the forest.',
-            'North': '','East': 'Forest', 'South': '', 'West': '', 'Image': 'swamp.png', 'Theme': 'DarkGreen1'},
+            'North': '','East': 'Forest', 'South': '', 'West': '', 
+            'BossDefeated': False, 'BossStory': 'Wading through the patchy swamp, the soft ground keeps giving way, making you sink in deeper. Just as your foot becomes stuck in the mud, you see the head of a large crocodile nearby, staring at you.', 
+            'Image': 'swamp.png', 'Theme': 'DarkGreen1'},
     }
 
 
@@ -53,14 +63,15 @@ if __name__ == "__main__":
     while True:
         event, values = window.read()
         if event == 'Enter':
-            list_of_tokens = TKN.valid_list(values['-IN-'].lower())
-
-            for token in list_of_tokens:
-                current_info = CMD.game_play(token, game_locations, current_location)
+            # send input for processing
+            input_value = values['-IN-'].lower()
+            current_info = CMD.game_play(input_value, game_locations, current_location, game_state)
+            # update GUI
             current_location = current_info[1]
             window['-OUTPUT-'].update(current_info[0])
             window['-IMG-'].update(r'images/'+game_locations[current_info[1]]
                                    ['Image'], size=(300, 300))
+            # update background with psg_rs
             new_theme = game_locations[current_location]['Theme']
             psg_rs.animated_reskin(window=window,
                             new_theme=new_theme,

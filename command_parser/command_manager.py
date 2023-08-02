@@ -3,6 +3,8 @@
 Handle the game play by processing commands.
 """
 
+import command_parser.token_handler as TKN
+
 
 def show_current_place(_game_locations, _current_location):
     """Gets the story at the current_location place
@@ -14,7 +16,7 @@ def show_current_place(_game_locations, _current_location):
     return _game_locations[_current_location]['Story']
 
 
-def game_play(_direction, _game_locations, _current_location):
+def game_play(_inputs, _game_locations, _current_location, _game_state):
     """
     Runs the game_play
 
@@ -25,14 +27,18 @@ def game_play(_direction, _game_locations, _current_location):
         string: the story at the current place and current location
     """
 
-    if _direction.lower() in set(['north', 'south', 'east', 'west']):
-        game_location = _game_locations[_current_location]
-        proposed_location = game_location[_direction.capitalize()]
-        if proposed_location == '':
-            return ['You can not go that way.\n'+_game_locations[_current_location]['Story'], _current_location]
-        else:
-            new_location = proposed_location
-            return [_game_locations[new_location]['Story'], new_location]
+    list_of_tokens = TKN.valid_list(_inputs)
+    for _token in list_of_tokens:
+        if _game_state == 'movement':
+            if _token.lower() in set(['north', 'south', 'east', 'west']):
+                game_location = _game_locations[_current_location]
+                proposed_location = game_location[_token.capitalize()]
+                if proposed_location == '':
+                    return ['You can not go that way.\n\n'+_game_locations[_current_location]['Story'], _current_location]
+                else:
+                    new_location = proposed_location
+                    return [_game_locations[new_location]['Story'], new_location]
+    return ['Invalid command.\n\n'+_game_locations[_current_location]['Story'], _current_location]
         
 
 if __name__ == "__main__":
