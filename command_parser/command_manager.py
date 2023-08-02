@@ -27,12 +27,8 @@ def game_play(_direction, _game_locations, _current_location):
 
     if _direction.lower() in set(['north', 'south', 'east', 'west']):
         game_location = _game_locations[_current_location]
-        print("GL", game_location)
-        print("D", _direction.capitalize())
         proposed_location = game_location[_direction.capitalize()]
-        print("PL", proposed_location)
         if proposed_location == '':
-            print('You can not go that way.')
             return ['You can not go that way.\n'+_game_locations[_current_location]['Story'], _current_location]
         else:
             new_location = proposed_location
