@@ -23,6 +23,8 @@ def valid_list(p_input_string):
     for string in p_input_string.split():
         if string.lower() in _vocab_tokens or string in _operators:
             result += [string]
+    if len(result) == 0:
+        return ['']
     return result
 
 
