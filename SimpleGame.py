@@ -10,7 +10,7 @@ import psg_reskinner as psg_rs
 # initialise game states
 current_location = 'Forest'
 game_state = 'Movement' # movement, decision, combat
-player = {'MaxHealth': 10, 'CurrentHealth': 10, 'Weapons': [{'Name': 'Fist', 'Damage': 2}], 'Inventory': {}}
+player = {'MaxHealth': 10, 'CurrentHealth': 10, 'Actions': [{'Name': 'Fist', 'Result': 2}, {'Name': 'Dodge', 'Result': 'No'}], 'Inventory': {}}
 game_locations = {
     'Forest': {'Story': 'You are in the forest.\n- To the north is a cave.\n- To the east is the coast.\n- To the south is a castle.\n- To the west is a swamp.',
             'North': 'Castle','East': 'Coast', 'South': 'Cave', 'West': 'Swamp', 

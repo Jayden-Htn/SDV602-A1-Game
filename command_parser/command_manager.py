@@ -32,7 +32,7 @@ def game_play(_inputs, _game_locations, _current_location, _game_state, _player,
     elif _game_state == 'Decision':
         return_value = ['Invalid command.\n\n'+_bosses[_game_locations[_current_location]['Boss']]['Description'], _current_location, _game_state]
     # return format: 'game story + message', 'current location', 'game state'
-    print('Game state', _game_state)
+    # change token options depending on current game state
     if _game_state == 'Movement':
         if _token.lower() in set(['north', 'south', 'east', 'west']):
             game_location = _game_locations[_current_location]
@@ -47,14 +47,15 @@ def game_play(_inputs, _game_locations, _current_location, _game_state, _player,
                     return_value =  [_bosses[_game_locations[proposed_location]['Boss']]['Description'], proposed_location, _game_state]
     elif _game_state == 'Decision':
         if _token.lower() == 'fight':
-            return_value =  [_bosses[_game_locations[_current_location]['Boss']]['FightMessage'], _current_location, 'Combat']
+            actions = ''
+            for a in _player['Actions']:
+                actions += '- '+a['Name']+': '+str(a['Result'])+' damage'+'\n'
+            return_value =  [_bosses[_game_locations[_current_location]['Boss']]['FightMessage']+'\n\n'+actions, _current_location, 'Combat']
         if _token.lower() == 'escape':
-            print('called')
             return_value =  [_bosses[_game_locations[_current_location]['Boss']]['EscapeMessage']+'\n\n'+_game_locations[_current_location]['Story'], _current_location, 'Movement']
     elif _game_state == 'Combat':
         if _token.lower() in set(['swing', 'dodge']):
-            x += 1
-    print('Returning')
+            return_value =  [_bosses[_game_locations[_current_location]['Boss']]['EscapeMessage']+'\n\n'+_game_locations[_current_location]['Story'], _current_location, 'Movement']
     return return_value
         
 
