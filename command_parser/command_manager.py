@@ -46,12 +46,11 @@ def game_play(_inputs, _game_locations, _current_location, _game_state, _player,
                     _game_state = 'Decision'
                     return_value =  [_bosses[_game_locations[proposed_location]['Boss']]['Description'], proposed_location, _game_state]
     elif _game_state == 'Decision':
-        # shouldn't need new location??
         if _token.lower() == 'fight':
-            return_value =  [_bosses[_game_locations[proposed_location]['Boss']]['Description'], _current_location, 'Combat']
+            return_value =  [_bosses[_game_locations[_current_location]['Boss']]['Description'], _current_location, 'Combat']
         if _token.lower() == 'escape':
             print('called')
-            return_value =  ['Absolutely terrified, you sprint out of the castle, hoping the vampire won\'t follow you.\n\n'+_game_locations[_current_location]['Story'], _current_location, 'Movement']
+            return_value =  [_bosses[_game_locations[_current_location]['Boss']]['EscapeMessage']+'\n\n'+_game_locations[_current_location]['Story'], _current_location, 'Movement']
     elif _game_state == 'Combat':
         if _token.lower() in set(['swing', 'dodge']):
             x += 1

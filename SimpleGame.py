@@ -14,7 +14,7 @@ player = {'MaxHealth': 10, 'CurrentHealth': 10, 'Weapons': [{'Name': 'Fist', 'Da
 game_locations = {
     'Forest': {'Story': 'You are in the forest.\n- To the north is a cave.\n- To the east is the coast.\n- To the south is a castle.\n- To the west is a swamp.',
             'North': 'Castle','East': 'Coast', 'South': 'Cave', 'West': 'Swamp', 
-            'Boss': 'None', 'Image': 'forest.png', 'Theme': 'DarkGreen'},
+            'Boss': 'Nymph', 'Image': 'forest.png', 'Theme': 'DarkGreen'},
     'Castle': {'Story': 'You are at the castle.\n- To the south is forest.',
             'North': '','East': '', 'South': 'Forest', 'West': '', 
             'Boss': 'Vampire', 'Image': 'castle.png', 'Theme': 'Reddit'},
@@ -29,15 +29,20 @@ game_locations = {
             'Boss': 'Crocodile', 'Image': 'swamp.png', 'Theme': 'DarkGreen1'},
     }
 game_bosses = {
-    'Nymph': {'Description': 'Returning to the quiet of the forest, you breath a deep sigh of relief... until you see the nymph\n\n- Fight\n- Escape', 
+    'Nymph': {'Description': 'Returning to the quiet of the forest, you breath a deep sigh of relief... until you see the nymph, who is obviously upset that you are disrupting the quiet of the forest.\n\n- Fight\n- Escape', 
+              'EscapeMessage': 'Afraid to anger any more spirits, you promptly depart the area', 'FightMessage': 'Unafraid, you prepare to fight the nymph.',
                 'Defeated': False, 'Health': 20, 'Attacks': [{}]},
     'Vampire': {'Description': 'Arriving at the castle, you  step foot through the grand entrance. Gazing aroung the elaborate foyer, your eyes set on the looming shape of a vampire, standing at the top of the staircase.\n\n- Fight\n- Escape', 
+                'EscapeMessage': 'Absolutely terrified, you sprint out of the castle, hoping the vampire won\'t follow you.', 'FightMessage': 'Excitement ripples throughout your body as you prepare to battle the vampire.',
                 'Defeated': False, 'Health': 20, 'Attacks': [{}]},
     'Serpent': {'Description': 'Hot from a long day of travel, you decide to cool down with a quick swim. Wading through the cool water, you soon feel something strong wrap around your ankle.\n\n- Fight\n- Escape', 
+                'EscapeMessage': 'Instictually, you jank your foot free and race for the shore.', 'FightMessage': 'Never one to back down from a fight, you prepare to battle the serpent.',
                 'Defeated': False, 'Health': 20, 'Attacks': [{}]},
     'Spider': {'Description': 'Flaming torch in hand, you work your way through the narrow cave passageway. Eventually, the walls open up into a large chamber, where a ginormous spider sits among its web.\n\n- Fight\n- Escape', 
+                'EscapeMessage': 'The crawling heap of spiders sends shivers down your spine as you race back out through the tunnels.', 'FightMessage': 'You\'ve never been afraid of spiders, and you\'re not about to start now. You prepare to fight.',
                 'Defeated': False, 'Health': 20, 'Attacks': [{}]},
     'Crocodile': {'Description': 'Wading through the patchy swamp, the soft ground keeps giving way, making you sink in deeper. Just as your foot becomes stuck in the mud, you see the head of a large crocodile nearby, staring at you.\n\n- Fight\n- Escape', 
+                'EscapeMessage': '', 'FightMessage': 'You\'ve fought a crocodile before. Sure, this one might be twice the size, but you\'re not afraid. You prepare to fight.',
                 'Defeated': False, 'Health': 20, 'Attacks': [{}]},
 
 }
