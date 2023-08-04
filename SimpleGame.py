@@ -9,29 +9,38 @@ import psg_reskinner as psg_rs
 
 # initialise game states
 current_location = 'Forest'
-game_state = 'movement' # movement, decision, fight
+game_state = 'Movement' # movement, decision, combat
+player = {'MaxHealth': 10, 'CurrentHealth': 10, 'Weapons': [{'Name': 'Fist', 'Damage': 2}], 'Inventory': {}}
 game_locations = {
     'Forest': {'Story': 'You are in the forest.\n- To the north is a cave.\n- To the east is the coast.\n- To the south is a castle.\n- To the west is a swamp.',
             'North': 'Castle','East': 'Coast', 'South': 'Cave', 'West': 'Swamp', 
-            'BossDefeated': True,
-            'Image': 'forest.png', 'Theme': 'DarkGreen'},
+            'Boss': 'None', 'Image': 'forest.png', 'Theme': 'DarkGreen'},
     'Castle': {'Story': 'You are at the castle.\n- To the south is forest.',
             'North': '','East': '', 'South': 'Forest', 'West': '', 
-            'BossDefeated': False, 'BossStory': 'Arriving at the castle, you  step foot through the grand entrance. Gazing aroung the elaborate foyer, your eyes set on the looming shape of a vampire, standing at the top of the staircase.',
-            'Image': 'castle.png', 'Theme': 'Reddit'},
+            'Boss': 'Vampire', 'Image': 'castle.png', 'Theme': 'Reddit'},
     'Coast': {'Story': 'You are at the coast.\n- To the west is the forest.',
             'North': '','East': '', 'South': '', 'West': 'Forest', 
-            'BossDefeated': False, 'BossStory': 'Hot from a long day of travel, you decide to cool down with a quick swim. You soon feel something strong wrap around you ankle.', 
-            'Image': 'coast.png', 'Theme': 'LightBrown11'},
+            'Boss': 'Serpent', 'Image': 'coast.png', 'Theme': 'LightBrown11'},
     'Cave': {'Story': 'You are at the cave.\n- To the north is forest.',
             'North': 'Forest','East': '', 'South': '', 'West': '', 
-            'BossDefeated': False, 'BossStory': 'Flaming torch in hand, you work your way through the narrow cave passageway. Eventually, the walls open up into a large chamber, where a ginormous spider sits among its web.', 
-            'Image': 'cave.png', 'Theme': 'DarkBlack1'},
+            'Boss': 'Spider', 'Image': 'cave.png', 'Theme': 'DarkBlack1'},
     'Swamp': {'Story': 'You are in the swamp.\n- To the east is the forest.',
             'North': '','East': 'Forest', 'South': '', 'West': '', 
-            'BossDefeated': False, 'BossStory': 'Wading through the patchy swamp, the soft ground keeps giving way, making you sink in deeper. Just as your foot becomes stuck in the mud, you see the head of a large crocodile nearby, staring at you.', 
-            'Image': 'swamp.png', 'Theme': 'DarkGreen1'},
+            'Boss': 'Crocodile', 'Image': 'swamp.png', 'Theme': 'DarkGreen1'},
     }
+game_bosses = {
+    'Nymph': {'Description': 'Returning to the quiet of the forest, you breath a deep sigh of relief... until you see the nymph\n\n- Fight\n- Escape', 
+                'Defeated': False, 'Health': 20, 'Attacks': [{}]},
+    'Vampire': {'Description': 'Arriving at the castle, you  step foot through the grand entrance. Gazing aroung the elaborate foyer, your eyes set on the looming shape of a vampire, standing at the top of the staircase.\n\n- Fight\n- Escape', 
+                'Defeated': False, 'Health': 20, 'Attacks': [{}]},
+    'Serpent': {'Description': 'Hot from a long day of travel, you decide to cool down with a quick swim. Wading through the cool water, you soon feel something strong wrap around your ankle.\n\n- Fight\n- Escape', 
+                'Defeated': False, 'Health': 20, 'Attacks': [{}]},
+    'Spider': {'Description': 'Flaming torch in hand, you work your way through the narrow cave passageway. Eventually, the walls open up into a large chamber, where a ginormous spider sits among its web.\n\n- Fight\n- Escape', 
+                'Defeated': False, 'Health': 20, 'Attacks': [{}]},
+    'Crocodile': {'Description': 'Wading through the patchy swamp, the soft ground keeps giving way, making you sink in deeper. Just as your foot becomes stuck in the mud, you see the head of a large crocodile nearby, staring at you.\n\n- Fight\n- Escape', 
+                'Defeated': False, 'Health': 20, 'Attacks': [{}]},
+
+}
 
 
 def make_a_window():
@@ -50,9 +59,9 @@ def make_a_window():
     buttons = [psg.Button('Enter',  bind_return_key=True), psg.Button('Exit')]
     command_col = psg.Column([prompt_input, buttons], element_justification='r')
     layout = [[psg.Image(r'images/forest.png', size=(300, 300), key="-IMG-"), 
-                psg.Text(CMD.show_current_place(game_locations, current_location), size=(100, 6), font='Any 12', 
-                key='-OUTPUT-')], [command_col]]
-    return psg.Window('Adventure Game', layout, size=(600, 400))
+                psg.Text(CMD.show_current_place(game_locations, current_location), size=(40, 10), font='Any 12', 
+                key='-OUTPUT-')], [command_col]] # size is the width and height of the story text box
+    return psg.Window('Adventure Game', layout, size=(700, 400))
 
 
 if __name__ == "__main__":
@@ -63,9 +72,11 @@ if __name__ == "__main__":
     while True:
         event, values = window.read()
         if event == 'Enter':
-            # send input for processing
+            # send input for processing and return new story
             input_value = values['-IN-'].lower()
-            current_info = CMD.game_play(input_value, game_locations, current_location, game_state)
+            current_info = CMD.game_play(input_value, game_locations, current_location, game_state, player, game_bosses)
+            # update global states
+            game_state = current_info[2]
             # update GUI
             current_location = current_info[1]
             window['-OUTPUT-'].update(current_info[0])

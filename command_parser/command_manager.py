@@ -14,9 +14,7 @@ def show_current_place(_game_locations, _current_location):
     """
 
     return _game_locations[_current_location]['Story']
-
-
-def game_play(_inputs, _game_locations, _current_location, _game_state):
+def game_play(_inputs, _game_locations, _current_location, _game_state, _player, _bosses):
     """
     Runs the game_play
 
@@ -28,17 +26,37 @@ def game_play(_inputs, _game_locations, _current_location, _game_state):
     """
 
     list_of_tokens = TKN.valid_list(_inputs)
-    for _token in list_of_tokens:
-        if _game_state == 'movement':
-            if _token.lower() in set(['north', 'south', 'east', 'west']):
-                game_location = _game_locations[_current_location]
-                proposed_location = game_location[_token.capitalize()]
-                if proposed_location == '':
-                    return ['You can not go that way.\n\n'+_game_locations[_current_location]['Story'], _current_location]
+    _token = list_of_tokens[0]
+    if _game_state == 'Movement':
+        return_value = ['Invalid command.\n\n'+_game_locations[_current_location]['Story'], _current_location, _game_state]
+    elif _game_state == 'Decision':
+        return_value = ['Invalid command.\n\n'+_bosses[_game_locations[_current_location]['Boss']]['Description'], _current_location, _game_state]
+    # return format: 'game story + message', 'current location', 'game state'
+    print('Game state', _game_state)
+    if _game_state == 'Movement':
+        if _token.lower() in set(['north', 'south', 'east', 'west']):
+            game_location = _game_locations[_current_location]
+            proposed_location = game_location[_token.capitalize()]
+            if proposed_location == '':
+                return_value = ['You can not go that way.\n\n'+_game_locations[_current_location]['Story'], _current_location, _game_state]
+            else:
+                if _game_locations[proposed_location]['Boss'] == 'None' or _bosses[_game_locations[proposed_location]['Boss']]['Defeated']:
+                    return_value =  [_game_locations[proposed_location]['Story'], proposed_location, _game_state]
                 else:
-                    new_location = proposed_location
-                    return [_game_locations[new_location]['Story'], new_location]
-    return ['Invalid command.\n\n'+_game_locations[_current_location]['Story'], _current_location]
+                    _game_state = 'Decision'
+                    return_value =  [_bosses[_game_locations[proposed_location]['Boss']]['Description'], proposed_location, _game_state]
+    elif _game_state == 'Decision':
+        # shouldn't need new location??
+        if _token.lower() == 'fight':
+            return_value =  [_bosses[_game_locations[proposed_location]['Boss']]['Description'], _current_location, 'Combat']
+        if _token.lower() == 'escape':
+            print('called')
+            return_value =  ['Absolutely terrified, you sprint out of the castle, hoping the vampire won\'t follow you.\n\n'+_game_locations[_current_location]['Story'], _current_location, 'Movement']
+    elif _game_state == 'Combat':
+        if _token.lower() in set(['swing', 'dodge']):
+            x += 1
+    print('Returning')
+    return return_value
         
 
 if __name__ == "__main__":
