@@ -47,7 +47,7 @@ def game_play(_inputs, _game_locations, _current_location, _game_state, _player,
                     return_value =  [_bosses[_game_locations[proposed_location]['Boss']]['Description'], proposed_location, _game_state]
     elif _game_state == 'Decision':
         if _token.lower() == 'fight':
-            return_value =  [_bosses[_game_locations[_current_location]['Boss']]['Description'], _current_location, 'Combat']
+            return_value =  [_bosses[_game_locations[_current_location]['Boss']]['FightMessage'], _current_location, 'Combat']
         if _token.lower() == 'escape':
             print('called')
             return_value =  [_bosses[_game_locations[_current_location]['Boss']]['EscapeMessage']+'\n\n'+_game_locations[_current_location]['Story'], _current_location, 'Movement']
