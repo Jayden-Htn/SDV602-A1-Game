@@ -6,8 +6,6 @@ Take string containing a proposed command produce a list of tokens
 _vocab_tokens = set(['north', 'south', 'east', 'west', 'fight', 'escape', 'pick',
                     'run', 'dodge', 'hide', 'swing'])
 
-_operators = set(['+', '-', 'x', '/', '(', ')'])
-
 
 def valid_list(p_input_string):
     """
@@ -21,7 +19,7 @@ def valid_list(p_input_string):
      
     result = []
     for string in p_input_string.split():
-        if string.lower() in _vocab_tokens or string in _operators:
+        if string.lower() in _vocab_tokens:
             result += [string]
     if len(result) == 0:
         return ['']
