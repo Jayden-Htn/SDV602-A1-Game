@@ -99,31 +99,31 @@ game_places = {'Forest': {'Story': 'You are in the forest.\n- To the north is a 
                           'North': (move, 'Castle'), 'East': (move, 'Coast'), 'South': (move, 'Cave'), 'West': (move, 'Village'),
                           'Image': 'forest.png', 'Theme': 'DarkGreen'},
                 'Castle': {'Story': 'You are at the castle.\n- Enter the castle.\n- To the south is forest.',
-                        'Enter': (enter_castle, 'InCastle'), 'South': (move, 'Forest')
+                        'Enter': (enter_castle, 'InCastle'), 'South': (move, 'Forest'),
                         'Image': 'castle.png', 'Theme': 'Reddit'},
                 'Coast': {'Story': 'You are at the coast.\n- Enter the water.\n- To the west is the forest.',
-                          'Enter': (move, 'Ocean'), 'West': (move, 'Forest')
+                          'Enter': (move, 'Ocean'), 'West': (move, 'Forest'),
                           'Image': 'coast.png', 'Theme': 'LightBrown11'},
                 'Cave': {'Story': 'You are at the cave.\n- Enter the cave.\n- To the north is forest.',
-                          'Enter': (move, 'InCave'), 'North': (move, 'Forest')
+                          'Enter': (move, 'InCave'), 'North': (move, 'Forest'),
                           'Image': 'cave.png', 'Theme': 'DarkBlack1'},
                 'Village': {'Story': 'You are at the village.\n- Talk to the chief.\n- To the east is the forest.', 
-                         'Talk': (talk_to_chief, 'Chief'), 'East': (move, 'Forest')
+                         'Talk': (talk_to_chief, 'Chief'), 'East': (move, 'Forest'),
                          'Image': 'village.png', 'Theme': 'DarkGrey1'},
                 'InCastle': {'Story': 'You  step foot through the grand entrance. Gazing aroung the elaborate foyer, your eyes set on the looming shape of a vampire, standing at the top of the staircase.\n\n- Fight\n- Escape',
-                        'Fight': (fight, 'Vampire'), 'Escape': (move, 'Castle')
+                        'Fight': (fight, 'Vampire'), 'Escape': (move, 'Castle'),
                         'Image': 'castle.png', 'Theme': 'Reddit'},
                 'Vampire': {'Story': 'Excitement ripples throughout your body as you prepare to battle the vampire.\n\n- Fight\n- Escape',
-                        'Fight': (fight, 'Vampire'), 'Escape': (move, 'Castle')
+                        'Fight': (fight, 'Vampire'), 'Escape': (move, 'Castle'),
                         'Image': 'castle.png', 'Theme': 'Reddit'},
                 'Ocean': {'Story': 'Hot from a long day of travel, you decide to cool down with a quick swim. Wading through the cool water, you feel a solid object buried in the sand.\n\n- Pickup\n- Leave',
-                        'Pickup': (pickup_key, 'Coast'), 'Leave': (move, 'Coast')
+                        'Pickup': (pickup_key, 'Coast'), 'Leave': (move, 'Coast'),
                         'Image': 'coast.png', 'Theme': 'LightBrown11'},
                 'InCave': {'Story': 'Flaming torch in hand, you work your way through the narrow cave passageway. Eventually, the walls open up into a large chamber, covered in mounds of spider webs.\n\n- Search cave\n- Leave',
-                        'Search': (move, 'SearchCave'), 'Leave': (move, 'Cave')
+                        'Search': (move, 'SearchCave'), 'Leave': (move, 'Cave'),
                         'Image': 'cave.png', 'Theme': 'DarkBlack1'},
                 'SearchCave': {'Story': 'Pushing through the thick web, you find the skeletal remains of a body. On the ground next to it lies a slightly rusted sword. \n\n- Pickup\n- Leave',
-                        'Pickup': (pickup_sword, 'Cave'), 'Leave': (move, 'Cave')
+                        'Pickup': (pickup_sword, 'Cave'), 'Leave': (move, 'Cave'),
                         'Image': 'cave.png', 'Theme': 'DarkBlack1'},
                         
                }
