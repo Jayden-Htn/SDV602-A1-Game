@@ -4,7 +4,7 @@ Take string containing a proposed command produce a list of tokens
 """
 _vocab_tokens = set(['north', 'south', 'east', 'west', 'fight', 'escape', 'fist', 
                      'sword', 'bow', 'heal', 'pickup', 'dodge', 'enter', 'talk', 
-                     'leave'])
+                     'leave', 'search'])
 
 
 def valid_list(p_input_string):
