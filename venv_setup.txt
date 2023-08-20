@@ -4,7 +4,7 @@
 $ python -m venv venv
 
 ### 2. Activate venv
-$ source venv/Scripts/activate
+$ source .venv/Scripts/activate
 
 ### 3. Installing modules with PIP
 $ pip install PySimpleGUI
