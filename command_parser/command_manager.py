@@ -9,7 +9,7 @@ import status.health as HP
 
 
 # Game commands
-def move(game_place):
+def move(game_place, extra=''):
     """_summary_
 
     Args:
@@ -23,7 +23,7 @@ def move(game_place):
     location = game_place[1]
     game_state = location
 
-    story_result = show_current_place()
+    story_result = extra+show_current_place()
 
     return story_result
 
@@ -38,7 +38,7 @@ def pickup_key(game_place):
         _type_: _description_
     """
     INV.collect_item("key")
-    return move(game_place)
+    return move(game_place, 'Picked up key.\n\n')
 
 def pickup_sword(game_place):
     """_summary_
@@ -50,7 +50,7 @@ def pickup_sword(game_place):
         _type_: _description_
     """
     INV.collect_item("sword")
-    return move(game_place)
+    return move(game_place, 'Picked up sword.\n\n')
 
 
 def enter_castle(game_place):
@@ -125,7 +125,6 @@ game_places = {'Forest': {'Story': 'You are in the forest.\n- To the north is a 
                 'SearchCave': {'Story': 'Pushing through the thick web, you find the skeletal remains of a body. On the ground next to it lies a slightly rusted sword. \n\n- Pickup\n- Leave',
                         'Pickup': (pickup_sword, 'Cave'), 'Leave': (move, 'Cave'),
                         'Image': 'cave.png', 'Theme': 'DarkBlack1'},
-                        
                }
 
 
