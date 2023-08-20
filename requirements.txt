@@ -1,0 +1,5 @@
+colour==0.1.5
+psg-reskinner==2.3.8
+PySimpleGUI==4.60.5
+
+# Run with pip install -r requirements.txt
