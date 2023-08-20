@@ -2,9 +2,9 @@
 
 Take string containing a proposed command produce a list of tokens
 """
-
-_vocab_tokens = set(['north', 'south', 'east', 'west', 'fight', 'escape', 'pick',
-                    'run', 'dodge', 'hide', 'swing'])
+_vocab_tokens = set(['north', 'south', 'east', 'west', 'fight', 'escape', 'fist', 
+                     'sword', 'bow', 'heal', 'pickup', 'dodge', 'enter', 'talk', 
+                     'leave'])
 
 
 def valid_list(p_input_string):
@@ -16,16 +16,9 @@ def valid_list(p_input_string):
     Args:
         p_input_string (string): a string of characters 
     """
-     
     result = []
-    for string in p_input_string.split():
-        if string.lower() in _vocab_tokens:
-            result += [string]
-    if len(result) == 0:
-        return ['']
+    for astring in p_input_string.split():
+        if astring.lower() in _vocab_tokens:
+            result += [astring]
+
     return result
-
-
-if __name__ == "__main__":
-    # tests
-    print(valid_list('north south'))
