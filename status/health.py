@@ -1,5 +1,9 @@
+"""_summary_
+    Handles the player health.
+"""
+
 import types
-_health_value: int = 1000
+_health_value: int = 10
 
 
 def get():

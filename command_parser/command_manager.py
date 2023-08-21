@@ -6,6 +6,7 @@ Manages the commands - may not be the best name at this time
 import command_parser.token_handler as TKN
 import inventory.contents as INV
 import status.health as HP
+import combat.monster_fight as FGT
 
 
 # Game commands
@@ -31,7 +32,7 @@ def move(game_place, extra=''):
 def pickup_key(game_place):
     """_summary_
         Find key in sand
-        ( inventory update add)
+        (inventory update add)
     Args:
         game_place (_type_): _description_
     Returns:
@@ -66,31 +67,35 @@ def talk_to_chief(game_place):
     if INV.has_item('crystal'):
         result = move(game_place)
     else:
-        result = "Adventurer, please help us. An evil vampire has been attacking our village. Please help us.\n"+show_current_place()
+        result = "Adventurer, please help us. An evil vampire has been attacking our village. The vampire lives in an old castle up north.\n\n"+show_current_place()
     return result
 
-def display_inventory(game_place):
+def display_inventory():
     result = ""
     result = INV.display_inventory()+'\n'+show_current_place()
     return result
 
-def fight(game_place):
+def fight(event):
     """
     Args:
         game_place (_type_): _description_
 
-    Returns:
+    Returns:s
         _type_: _description_
     """
-    # Implement "fight"
-    # Check inventory for a sword - if no sword go to blacksmith
-    # If there is a sword then flip a random to decide if they win or lose
-    # If they lose they lose health
-    #    They die when health is zero. When they die,  empty inventory, game_state = Forest
-    # If they win they can move into the Castle ...
-    result = "You can not fight because you don\'t have a sword.\nGet a sword from the blacksmith\'s.\nFighting has not been implemented\n Can you implement it?"+show_current_place()
+    
+    # perform combat
+    result = FGT.fight(event[1])
 
-    return result
+    # check healths
+    if HP.get() <= 0:
+        message = move(('Move', 'Dead'))
+    elif FGT.get_boss_health() <= 0:
+        message = move(('Move', 'Win'))
+    else:
+        message = result+'\n'+show_current_place()
+
+    return message
 
 
 game_state = 'Forest'
@@ -106,26 +111,30 @@ game_places = {'Forest': {'Story': 'You are in the forest.\n- To the north is a 
                           'Image': 'coast.png', 'Theme': 'LightBrown11'},
                 'Cave': {'Story': 'You are at the cave.\n- Enter the cave.\n- To the north is forest.',
                           'Enter': (move, 'InCave'), 'North': (move, 'Forest'),
-                          'Image': 'cave.png', 'Theme': 'DarkBlack1'},
+                          'Image': 'cave.png', 'Theme': 'DarkGrey7'},
                 'Village': {'Story': 'You are at the village.\n- Talk to the chief.\n- To the east is the forest.', 
                          'Talk': (talk_to_chief, 'Chief'), 'East': (move, 'Forest'),
                          'Image': 'village.png', 'Theme': 'DarkGrey1'},
-                'InCastle': {'Story': 'You  step foot through the grand entrance. Gazing aroung the elaborate foyer, your eyes set on the looming shape of a vampire, standing at the top of the staircase.\n\n- Fight\n- Escape',
-                        'Fight': (fight, 'Vampire'), 'Escape': (move, 'Castle'),
+                'InCastle': {'Story': 'You step foot through the grand entrance. Gazing aroung the elaborate foyer, your eyes set on the looming shape of a vampire, standing at the top of the staircase.\n\n- Fight\n- Escape',
+                        'Fight': (move, 'Boss'), 'Escape': (move, 'Castle'),
                         'Image': 'castle.png', 'Theme': 'Reddit'},
-                'Vampire': {'Story': 'Excitement ripples throughout your body as you prepare to battle the vampire.\n\n- Fight\n- Escape',
-                        'Fight': (fight, 'Vampire'), 'Escape': (move, 'Castle'),
-                        'Image': 'castle.png', 'Theme': 'Reddit'},
+                'Boss': {'Story': 'The vampire grins at you menacingly.\n- Fist\n- Sword\n- Escape',
+                        'Fist': (fight, 'Fist'), 'Sword': (fight, 'Sword'), 'Escape': (move, 'Castle'),
+                        'Image': 'vampire.png', 'Theme': 'DarkBrown4'},
                 'Ocean': {'Story': 'Hot from a long day of travel, you decide to cool down with a quick swim. Wading through the cool water, you feel a solid object buried in the sand.\n\n- Pickup\n- Leave',
                         'Pickup': (pickup_key, 'Coast'), 'Leave': (move, 'Coast'),
-                        'Image': 'coast.png', 'Theme': 'LightBrown11'},
+                        'Image': 'coast.png', 'Theme': 'DarkTeal12'},
                 'InCave': {'Story': 'Flaming torch in hand, you work your way through the narrow cave passageway. Eventually, the walls open up into a large chamber, covered in mounds of spider webs.\n\n- Search cave\n- Leave',
                         'Search': (move, 'SearchCave'), 'Leave': (move, 'Cave'),
                         'Image': 'cave.png', 'Theme': 'DarkBlack1'},
-                'SearchCave': {'Story': 'Pushing through the thick web, you find the skeletal remains of a body. On the ground next to it lies a slightly rusted sword. \n\n- Pickup\n- Leave',
+                'SearchCave': {'Story': 'Pushing through the thick web, you find the skeletal remains of a body. On the ground next to it lies a slightly rusted sword.\n\n- Pickup\n- Leave',
                         'Pickup': (pickup_sword, 'Cave'), 'Leave': (move, 'Cave'),
                         'Image': 'cave.png', 'Theme': 'DarkBlack1'},
-               }
+                'Dead': {'Story': 'You were not strong enough to defeat the vampire and died. The vampire continued to terrorise the villagers. The village was eventually abandoned, and the vampire continued to live in the castle for the rest of his days.\n\nGAME OVER',
+                         'Image': 'dead.png', 'Theme': 'DarkGrey1'},
+                'Win': {'Story': 'You have defeated the vampire. The villagers are safe once again. You are a hero!\n\nGAME OVER',
+                        'Image': 'castle.png', 'Theme': 'Reddit'}
+                }
 
 
 def show_current_place():
@@ -160,7 +169,7 @@ def game_play(command_input):
                 place = game_place[event]
                 story_result = place[0](place)  # Run the action
             elif event == 'Inventory':
-                story_result = display_inventory(game_place)
+                story_result = display_inventory()
             else:
-                story_result = f"Can't {event} here\n"+show_current_place()
+                story_result = f"Can't do {event} here\n"+show_current_place()
     return story_result
