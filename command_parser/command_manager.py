@@ -38,7 +38,14 @@ def pickup_key(game_place):
     Returns:
         _type_: _description_
     """
+
+    # add key to inventory
     INV.collect_item("key")
+
+    # remove key from coast
+    game_places['Ocean'].pop('Pickup')
+    game_places['Ocean']['Story'] = 'Enjoying the refreshing cool of the water, you enjoy a quick swim before heading back to shore.\n\n- Leave'
+
     return move(game_place, 'Picked up key.\n\n')
 
 def pickup_sword(game_place):
@@ -51,8 +58,32 @@ def pickup_sword(game_place):
         _type_: _description_
     """
     INV.collect_item("sword")
+
+    # change pickup to crystal
+    game_places['SearchCave']['Pickup'] = [pickup_crystal, 'InCave']
+
+    # update story
+    game_places['SearchCave']['Story'] = 'Searching through the cave again, you stumble over something sticking out of the ground. Uncovering it from the years of dirt and grime, find a glowing crystal.\n\n- Pickup\n- Leave'
+    game_places['InCave']['Story'] = 'You stand at the entranceway to the large chamber, torchlight flickering over the walls.\n\n- Search cave\n- Leave'
+
     return move(game_place, 'Picked up sword.\n\n')
 
+def pickup_crystal(game_place):
+    """_summary_
+        Find crystal in cave
+        ( inventory update add)
+    Args:
+        game_place (_type_): _description_
+    Returns:
+        _type_: _description_
+    """
+    INV.collect_item("crystal")
+
+    # remove pickup from cave
+    game_places['SearchCave'].pop('Pickup')
+    game_places['SearchCave']['Story'] = 'Curious if there are any other secrets in the cave, you search around the chamber but find nothing.\n\n- Leave'
+
+    return move(game_place, 'Picked up crystal.\n\n')
 
 def enter_castle(game_place):
     result = ""
@@ -80,7 +111,7 @@ def fight(event):
     Args:
         game_place (_type_): _description_
 
-    Returns:s
+    Returns:
         _type_: _description_
     """
     
@@ -122,13 +153,13 @@ game_places = {'Forest': {'Story': 'You are in the forest.\n- To the north is a 
                         'Fist': (fight, 'Fist'), 'Sword': (fight, 'Sword'), 'Escape': (move, 'Castle'),
                         'Image': 'vampire.png', 'Theme': 'DarkBrown4'},
                 'Ocean': {'Story': 'Hot from a long day of travel, you decide to cool down with a quick swim. Wading through the cool water, you feel a solid object buried in the sand.\n\n- Pickup\n- Leave',
-                        'Pickup': (pickup_key, 'Coast'), 'Leave': (move, 'Coast'),
+                        'Pickup': (pickup_key, 'Ocean'), 'Leave': (move, 'Coast'),
                         'Image': 'coast.png', 'Theme': 'DarkTeal12'},
                 'InCave': {'Story': 'Flaming torch in hand, you work your way through the narrow cave passageway. Eventually, the walls open up into a large chamber, covered in mounds of spider webs.\n\n- Search cave\n- Leave',
                         'Search': (move, 'SearchCave'), 'Leave': (move, 'Cave'),
                         'Image': 'cave.png', 'Theme': 'DarkBlack1'},
                 'SearchCave': {'Story': 'Pushing through the thick web, you find the skeletal remains of a body. On the ground next to it lies a slightly rusted sword.\n\n- Pickup\n- Leave',
-                        'Pickup': (pickup_sword, 'Cave'), 'Leave': (move, 'Cave'),
+                        'Pickup': (pickup_sword, 'InCave'), 'Leave': (move, 'InCave'),
                         'Image': 'cave.png', 'Theme': 'DarkBlack1'},
                 'Dead': {'Story': 'You were not strong enough to defeat the vampire and died. The vampire continued to terrorise the villagers. The village was eventually abandoned, and the vampire continued to live in the castle for the rest of his days.\n\nGAME OVER',
                          'Image': 'dead.png', 'Theme': 'DarkGrey1'},

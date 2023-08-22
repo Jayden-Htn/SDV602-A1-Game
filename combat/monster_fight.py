@@ -26,9 +26,7 @@ def player_attack(event):
     """
     global _boss_health
 
-    print("event: "+event)
     if event == 'Sword':
-        print("sword attack")
         result = RND.randint(3, 5)
         _boss_health -= result
     else:
@@ -56,7 +54,7 @@ def boss_attack():
     else:
         HP.reduce(1)
         result = "The vampire grabs you by the throat, lifting you off the ground dealing 1 damage."
- 
+    
     return result
 
 
@@ -66,7 +64,7 @@ def fight(event):
     
     result_2 = boss_attack()
 
-    # return state to handle move
+    # return attack messages
     return result_1+'\n'+result_2
 
     
