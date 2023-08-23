@@ -20,7 +20,7 @@ def move(game_place, extra=''):
         _type_: _description_
     """
     global game_state
-    
+
     location = game_place[1]
     game_state = location
 
@@ -106,6 +106,39 @@ def display_inventory():
     result = INV.display_inventory()+'\n'+show_current_place()
     return result
 
+def prepFight(event):
+    # add correct actions depending on inventory
+    if INV.has_item('sword'):
+        game_places['Boss']['Sword'] = (fight, 'Sword')
+    if INV.has_item('crystal'):
+        game_places['Boss']['Crystal'] = (fight, 'Crystal')
+
+    # update story to include actions
+    display_combat_actions()
+
+    # move and display story
+    story_result = move((move, 'Boss'))
+    return story_result
+    
+def display_combat_actions():
+    global game_places
+
+    result = ""
+    # add correct actions depending on inventory
+    if INV.has_item('crystal'):
+        result += '- Crystal\n'
+    if INV.has_item('sword'):
+        result += '- Sword\n'
+    # fist and escape are always options
+    result += '- Fist\n'
+    result += '- Escape'
+    # check if combat started
+    message = ''
+    if FGT.get_boss_health() == 15:
+        message +='The vampire grins at you menacingly.\n\n'
+    message += result
+    game_places['Boss']['Story'] = message
+
 def fight(event):
     """
     Args:
@@ -118,13 +151,20 @@ def fight(event):
     # perform combat
     result = FGT.fight(event[1])
 
-    # check healths
+    # remove crystal if used
+    if event[1] == 'Crystal':
+        INV.remove_item('crystal')
+        game_places['Boss'].pop('Crystal')
+    # regenerate story actions
+    display_combat_actions()
+
+    # check if player or boss is dead
     if HP.get() <= 0:
         message = move(('Move', 'Dead'))
     elif FGT.get_boss_health() <= 0:
         message = move(('Move', 'Win'))
     else:
-        message = result+'\n'+show_current_place()
+        message = result+'\n\n'+show_current_place()
 
     return message
 
@@ -147,10 +187,10 @@ game_places = {'Forest': {'Story': 'You are in the forest.\n- To the north is a 
                          'Talk': (talk_to_chief, 'Chief'), 'East': (move, 'Forest'),
                          'Image': 'village.png', 'Theme': 'DarkGrey1'},
                 'InCastle': {'Story': 'You step foot through the grand entrance. Gazing aroung the elaborate foyer, your eyes set on the looming shape of a vampire, standing at the top of the staircase.\n\n- Fight\n- Escape',
-                        'Fight': (move, 'Boss'), 'Escape': (move, 'Castle'),
+                        'Fight': (prepFight, 'Boss'), 'Escape': (move, 'Castle'),
                         'Image': 'castle.png', 'Theme': 'Reddit'},
-                'Boss': {'Story': 'The vampire grins at you menacingly.\n- Fist\n- Sword\n- Escape',
-                        'Fist': (fight, 'Fist'), 'Sword': (fight, 'Sword'), 'Escape': (move, 'Castle'),
+                'Boss': {'Story': 'The vampire grins at you menacingly.',
+                        'Fist': (fight, 'Fist'), 'Escape': (move, 'Castle'),
                         'Image': 'vampire.png', 'Theme': 'DarkBrown4'},
                 'Ocean': {'Story': 'Hot from a long day of travel, you decide to cool down with a quick swim. Wading through the cool water, you feel a solid object buried in the sand.\n\n- Pickup\n- Leave',
                         'Pickup': (pickup_key, 'Ocean'), 'Leave': (move, 'Coast'),
@@ -191,16 +231,17 @@ def game_play(command_input):
     story_result = ''
     valid_tokens = TKN.valid_list(command_input)
     if not valid_tokens:
-        story_result = 'Can not understand that sorry\n'+show_current_place()
+        story_result = 'Invalid command.\n\n'+show_current_place()
     else:
         for atoken in valid_tokens:
             game_place = game_places[game_state]
             event = atoken.capitalize()
+            # if event token in current location options
             if event in game_place:
-                place = game_place[event]
-                story_result = place[0](place)  # Run the action
+                place = game_place[event] # place = action key: (action function, new state)
+                story_result = place[0](place)  # call action function with place
             elif event == 'Inventory':
                 story_result = display_inventory()
             else:
-                story_result = f"Can't do {event} here\n"+show_current_place()
+                story_result = f"Can't perform action {event} here\n\n"+show_current_place()
     return story_result
