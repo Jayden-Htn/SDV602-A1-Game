@@ -7,7 +7,7 @@ Functions:
     increase(value)
         
 Global Variables:
-    _health_value (int)
+    _player_info (dict)
 """
 
 # Import modules
@@ -15,7 +15,8 @@ import types
 
 
 # Global variables
-_health_value: int = 10
+_player_info = {"Player_1": 10} 
+# Used a dictionary to allow for future player expansion
 
 
 # Functions
@@ -23,9 +24,9 @@ def get():
     """Retrieves the player's health.
 
     Returns:
-        _health_value (int): The player's health
+        (int): The player's health
     """
-    return _health_value
+    return _player_info["Player_1"]
 
 
 def decrease(value):
@@ -34,15 +35,15 @@ def decrease(value):
     Parameters:
         value (int): The amount of health to be reduced
     """
-    global _health_value
-    _health_value -= value
+    global _player_info
+    _player_info["Player_1"] -= value
 
 
 def increase(value):
     """Increases the player's health.
 
     Parameters:
-        value (int): The amount of health to be increased
+        (int): The amount of health to be increased
     """
-    global _health_value
-    _health_value += value
+    global _player_info
+    _player_info["Player_1"] += value

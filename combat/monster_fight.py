@@ -54,13 +54,9 @@ def player_attack(weapon):
     else:
         result = RND.randint(1, 2)
         _boss_health -= result
-
     return (
-        "You attack the vampire with your "
-        + weapon
-        + " dealing "
-        + str(result)
-        + " damage."
+        "You attack the vampire with your " + weapon
+        + " dealing " + str(result) + " damage."
     )
 
 

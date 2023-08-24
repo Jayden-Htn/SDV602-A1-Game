@@ -183,7 +183,7 @@ def prepFight(event):
     display_combat_actions()
 
     # Move and display story
-    story_result = move((move, "Boss"))
+    story_result = move( "Boss")
     return story_result
 
 
@@ -218,7 +218,7 @@ def fight(event):
         message (str): the result of the combat
     """
     # Perform combat
-    result = FGT.fight(event[1])
+    result = FGT.fight(event)
 
     # Remove crystal if used
     if event[1] == "Crystal":
