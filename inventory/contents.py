@@ -1,5 +1,5 @@
-"""
-This module contains functions and variables related to the player's inventory.
+"""This module contains functions and variables related to the 
+    player's inventory.
 
 Functions:
     collect_item(item_name)
@@ -17,8 +17,7 @@ _player_inventory = set()
 
 # Functions
 def collect_item(item_name):
-    """
-    Adds an item to the player's inventory.
+    """Adds an item to the player's inventory.
 
     Parameters:
         item_name (str): The name of the item to be added
@@ -27,8 +26,7 @@ def collect_item(item_name):
 
 
 def remove_item(item_name):
-    """
-    Removes an item from the player's inventory.
+    """Removes an item from the player's inventory.
 
     Parameters:
         item_name (str): The name of the item to be removed
@@ -37,8 +35,7 @@ def remove_item(item_name):
 
 
 def has_item(item_name):
-    """
-    Checks if the player has an item.
+    """Checks if the player has an item.
 
     Parameters:
         item_name (str): The name of the item to be checked
@@ -50,8 +47,7 @@ def has_item(item_name):
 
 
 def display_inventory():
-    """
-    Displays the player's inventory.
+    """Displays the player's inventory.
 
     Returns:
         result (str): The player's inventory

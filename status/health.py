@@ -1,5 +1,5 @@
-"""
-This module contains functions and variables related to the player's health.
+"""This module contains functions and variables related to the 
+    player's health.
 
 Functions:
     get()
@@ -20,8 +20,7 @@ _health_value: int = 10
 
 # Functions
 def get():
-    """
-    Retrieves the player's health.
+    """Retrieves the player's health.
 
     Returns:
         _health_value (int): The player's health
@@ -30,8 +29,7 @@ def get():
 
 
 def decrease(value):
-    """
-    Reduces the player's health.
+    """Reduces the player's health.
 
     Parameters:
         value (int): The amount of health to be reduced
@@ -41,8 +39,7 @@ def decrease(value):
 
 
 def increase(value):
-    """
-    Increases the player's health.
+    """Increases the player's health.
 
     Parameters:
         value (int): The amount of health to be increased

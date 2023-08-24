@@ -1,5 +1,4 @@
-"""
-This module handles the combat system for the monster fight.
+"""This module handles the combat system for the monster fight.
 
 Functions:
     get_boss_health()
@@ -22,8 +21,7 @@ _boss_health = 15
 
 # Functions
 def get_boss_health():
-    """
-    Retrieves the boss's health.
+    """Retrieves the boss's health.
 
     Returns:
         _boss_health (int): The boss's health
@@ -32,8 +30,7 @@ def get_boss_health():
 
 
 def player_attack(weapon):
-    """
-    Processes the player's attack and damage dealt.
+    """Processes the player's attack and damage dealt.
 
     Parameters:
         weapon (str): The weapon used by the player
@@ -43,23 +40,32 @@ def player_attack(weapon):
     """
     global _boss_health
 
-    if weapon == 'Sword':
+    if weapon == "Sword":
         result = RND.randint(3, 5)
         _boss_health -= result
-    elif weapon == 'Crystal':
+    elif weapon == "Crystal":
         result = RND.randint(9, 10)
         _boss_health -= result
-        return "You pull out the glowing crystal, it begins to glow brighter and brighter. You throw it at the vampire, it explodes on impact dealing "+str(result)+" damage."
+        return (
+            "You pull out the glowing crystal, it begins to glow brighter"
+            "and brighter. You throw it at the vampire, it explodes on "
+            "impact dealing " + str(result) + " damage."
+        )
     else:
         result = RND.randint(1, 2)
         _boss_health -= result
 
-    return "You attack the vampire with your "+weapon+" dealing "+str(result)+" damage."
+    return (
+        "You attack the vampire with your "
+        + weapon
+        + " dealing "
+        + str(result)
+        + " damage."
+    )
 
 
 def boss_attack():
-    """
-    Processes the boss's attack and damage dealt.
+    """Processes the boss's attack and damage dealt.
 
     Returns:
         result (str): The result of the boss's attack
@@ -69,20 +75,28 @@ def boss_attack():
 
     if vampire_attack == 1:
         HP.decrease(4)
-        result = "The vampire lunges at you, sinking his fangs into your neck dealing 4 damage."
+        result = (
+            "The vampire lunges at you, sinking his fangs into "
+            "your neck dealing 4 damage."
+        )
     elif vampire_attack == 2 or vampire_attack == 3:
         HP.decrease(2)
-        result = "The vampire swings his fist at you, knocking you to the ground dealing 2 damage."
+        result = (
+            "The vampire swings his fist at you, knocking "
+            "you to the ground dealing 2 damage."
+        )
     else:
         HP.decrease(1)
-        result = "The vampire grabs you by the throat, lifting you off the ground dealing 1 damage."
-    
+        result = (
+            "The vampire grabs you by the throat, lifting "
+            "you off the ground dealing 1 damage."
+        )
+
     return result
 
 
 def fight(weapon):
-    """
-    Processes the player's and boss's attacks.
+    """Processes the player's and boss's attacks.
 
     Parameters:
         weapon (str): The weapon used by the player
@@ -95,5 +109,5 @@ def fight(weapon):
     result_2 = boss_attack()
 
     # Return attack messages
-    message = result_1+'\n\n'+result_2
+    message = result_1 + "\n\n" + result_2
     return message
