@@ -41,8 +41,7 @@ def move(game_place, extra=''):
     """
     global game_state
 
-    location = game_place[1]
-    game_state = location
+    game_state = game_place
 
     story_result = extra+show_current_place()
     return story_result
@@ -53,7 +52,7 @@ def pickup_key(game_place):
     Adds key to inventory and removes it from the coast.
 
     Parameters:
-        game_place (tuple): contains (action function, new state)
+        game_place (str): contains new state name
 
     Returns:
         move (function): new location and extra text
@@ -73,7 +72,7 @@ def pickup_sword(game_place):
     Adds sword to inventory, removes it from the cave and adds crystal to the cave.
 
     Parameters:
-        game_place (tuple): contains (action function, new state)
+        game_place (str): contains new state name
 
     Returns:
         move (function): new location and extra text
@@ -95,7 +94,7 @@ def pickup_crystal(game_place):
     Adds crystal to inventory, removes it from the cave and changes story text.
 
     Parameters:
-        game_place (tuple): contains (action function, new state)
+        game_place (str): contains new state name
 
     Returns:
         move (function): new location and extra text
@@ -114,7 +113,7 @@ def enter_castle(game_place):
     Enter the castle if the player has the key.
 
     Parameters:
-        game_place (tuple): contains (action function, new state)
+        game_place (str): contains new state name
 
     Returns:
         result (str): move function or show current story function
@@ -123,7 +122,7 @@ def enter_castle(game_place):
     if INV.has_item('key'):
         result = move(game_place)
     else:
-        result = "The door is locked.\n"+show_current_place()
+        result = "The door is locked.\n\n"+show_current_place()
     return result
 
 
@@ -132,7 +131,7 @@ def talk_to_chief(game_place):
     Talk to the chief.
 
     Parameters:
-        game_place (tuple): contains (action function, new state)
+        game_place (str): contains new state name
 
     Returns:
         result (str): chief's message and current story
@@ -263,7 +262,7 @@ def game_play(command_input):
             # If event token in current location options
             if event in game_place:
                 place = game_place[event] # Place = action key: (action function, new state)
-                story_result = place[0](place)  # Call action function with place
+                story_result = place[0](place[1])  # Call action function with place
             elif event == 'Inventory':
                 story_result = display_inventory()
             else:
