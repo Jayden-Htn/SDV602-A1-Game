@@ -58,3 +58,9 @@ def display_inventory():
     if len(_player_inventory) == 0:
         result += "Empty\n"
     return result
+
+
+if __name__ == "__main__":
+    # Assertion tests
+    assert display_inventory() == "Inventory:\nEmpty\n"
+    assert collect_item("sword") is None

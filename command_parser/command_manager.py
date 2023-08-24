@@ -403,3 +403,15 @@ game_places = {
         "Theme": "Reddit",
     },
 }
+
+
+if __name__ == "__main__":
+    # Assertion tests
+    assert game_play("talk") == (
+        "Adventurer, please help us. An evil vampire has been attacking our "
+        "village. The vampire lives in an old castle up north.\n\n"
+        "[Health=10]\n\nYou are at the village.\n- Talk to the chief.\n"
+        "- To the east is the forest."
+    )
+    assert show_current_place() == "Forest"
+

@@ -45,3 +45,17 @@ def valid_list(p_input_string):
             result += [astring]
 
     return result
+
+
+if __name__ == "__main__":
+    # Assertion tests
+    assert valid_list("north south east west fight Talk ENTER") == [
+        "north",
+        "south",
+        "east",
+        "west",
+        "fight",
+        "Talk",
+        "ENTER",
+    ]
+    

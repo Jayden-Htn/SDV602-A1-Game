@@ -111,3 +111,17 @@ def fight(weapon):
     # Return attack messages
     message = result_1 + "\n\n" + result_2
     return message
+
+
+if __name__ == "__main__":
+    # Assertion tests
+    assert player_attack("Fist") in [
+        "You attack the vampire with your Fist dealing 1 damage.",
+        "You attack the vampire with your Fist dealing 2 damage.",
+    ]
+    assert player_attack("Sword") in [
+        "You attack the vampire with your Sword dealing 3 damage.",
+        "You attack the vampire with your Sword dealing 4 damage.",
+        "You attack the vampire with your Sword dealing 5 damage.",
+    ]
+    
