@@ -1,5 +1,5 @@
 # SDV602-A1-Game
-Python game for SDV602 assessment 1.
+Python game for SDV602 assessment 1. Please read this document before setting up and playing the game.
 <br><br>
 
 ## Dependancies
@@ -31,4 +31,21 @@ Gameplay is based of entering keywords. Only the first keyword will be processed
 - Enter, leave, escape
 - Fist, sword, crystal
 - Talk, search, pickup
+<br><br>
 
+## Story
+
+<b>Warning, story spoilers ahead.</b>
+
+There are two phases that must be completed in order and items that must be completed in order to successfully complete the game. 
+
+### Phase 1 (in any order)
+- Visit the village to learn the story
+- Collect the key from the coast
+- Collect the sword and crystal (optional) from the cave
+
+### Phase 2 (boss fight)
+- Enter the castle. 
+- While the castle can be enter once the key is collected, fighting with no weapons will end in death.
+- It is possible to win the fight with just the sword, but not guarenteed.
+- Using the crystal then sword will guarentee victory
